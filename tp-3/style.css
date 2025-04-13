@@ -1,0 +1,45 @@
+/* 1  */
+.titulo {
+    text-align: center
+}
+
+/* 2  */
+body p{
+    font-family: serif;
+}
+
+/* 3  */
+p#primer-parrafo{
+    background-color: #CEE;
+}
+
+/* 4  */
+ p#primer-parrafo em{
+    background-color: #933;
+}
+
+/* 5  */
+body a{
+    outline: 1px solid #333
+}
+
+/* 6  */
+ body p.fuente.parrafo:first-of-type{
+    opacity: 100%;
+}
+
+/* 7  */
+body p:not([id]){
+    text-shadow: none;
+}
+
+/* Bonus Track 1  */
+body p.fuente.parrafo{
+    color: #000 !important;
+}
+
+/* Bonus Track 2  */
+html body article#contenedor p.novelas.parrafo span.complicado{
+    font-weight: bold;
+    color: #000 !important;
+}
