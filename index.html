@@ -2,12 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Listado Recursivo Archivos GitHub</title>
+  <title>Archivos y Carpetas del Repo GitHub</title>
   <style>
     ul { list-style-type: none; }
-    .folder { font-weight: bold; cursor: pointer; }
-    .nested { margin-left: 20px; display: none; }
-    .active { display: block; }
+    li { margin: 4px 0; }
   </style>
 </head>
 <body>
@@ -17,6 +15,7 @@
   <script>
     const owner = 'ProgrmadorMeh'; // Cambia por el dueño
     const repo = 'plataformas-moviles-entregas'; // Cambia por el repo
+    const branch = 'main'; // Cambia si usás otra rama
 
     async function listarContenido(path = '') {
       const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -35,16 +34,9 @@
         const li = document.createElement('li');
 
         if (item.type === 'dir') {
-          li.innerHTML = `<span class="folder">${item.name}</span>`;
-          const nestedUl = document.createElement('ul');
-          nestedUl.classList.add('nested');
-          li.appendChild(nestedUl);
-
-          li.querySelector('.folder').addEventListener('click', () => {
-            nestedUl.classList.toggle('active');
-          });
-
-          await crearLista(item.path, nestedUl);
+          // Link directo a index.html dentro de la carpeta en GitHub
+          const indexUrl = `https://github.com/${owner}/${repo}/blob/${branch}/${item.path}/index.html`;
+          li.innerHTML = `<a href="${indexUrl}" target="_blank">${item.name}</a>`;
         } else if (item.type === 'file') {
           li.innerHTML = `<a href="${item.download_url}" target="_blank">${item.name}</a>`;
         }
