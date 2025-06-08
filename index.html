@@ -3,59 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <title>Trabajos de Plataformas Moviles</title>
-  <h3>Hugo Ezequiel Medina Carabajal</h3>
-  <style>
-    ul { list-style-type: none; }
-    li { margin: 4px 0; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Archivos y Carpetas del Repo GitHub</h1>
-  <ul id="repo-content"></ul>
+    <h1>Trabajos de Plataformas Moviles</h1>
+    <h3>Hugo Ezequiel Medina Carabajal</h3>
+    <ul id="repo-content"></ul>
+    
+    <script>
+        const owner = 'ProgrmadorMeh'; // tu usuario GitHub
+        const repo = 'plataformas-moviles-entregas'; // nombre del repo donde está el código
+        const branch = 'main'; // o la rama que uses (por defecto es main)
 
-  <script>
-    const owner = 'ProgrmadorMeh'; // tu usuario GitHub
-    const repo = 'plataformas-moviles-entregas'; // nombre del repo donde está el código
-    const branch = 'main'; // o la rama que uses (por defecto es main)
+        // Función para listar los archivos y carpetas de un repo
+        async function listarContenido(path = '') {
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            console.error('Error:', response.status);
+            return [];
+        }
+        return await response.json();
+        }
 
-    // Función para listar los archivos y carpetas de un repo
-    async function listarContenido(path = '') {
-      const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-      const response = await fetch(url);
-      if (!response.ok) {
-        console.error('Error:', response.status);
-        return [];
-      }
-      return await response.json();
-    }
+        // Función para crear la lista de carpetas y archivos
+        async function crearLista(path = '', ulElement) {
+        const items = await listarContenido(path);
 
-    // Función para crear la lista de carpetas y archivos
-    async function crearLista(path = '', ulElement) {
-      const items = await listarContenido(path);
+        // Filtrar solo las carpetas y ordenarlas numéricamente
+        const carpetas = items.filter(item => item.type === 'dir');
 
-      // Filtrar solo las carpetas y ordenarlas numéricamente
-      const carpetas = items.filter(item => item.type === 'dir');
+        // Ordenamos las carpetas según el número extraído de 'tp-numeracion'
+        carpetas.sort((a, b) => {
+            const numA = parseInt(a.name.match(/\d+/)[0], 10); // Extrae el número de 'tp-1'
+            const numB = parseInt(b.name.match(/\d+/)[0], 10); // Extrae el número de 'tp-2'
+            return numA - numB; // Ordena numéricamente
+        });
 
-      // Ordenamos las carpetas según el número extraído de 'tp-numeracion'
-      carpetas.sort((a, b) => {
-        const numA = parseInt(a.name.match(/\d+/)[0], 10); // Extrae el número de 'tp-1'
-        const numB = parseInt(b.name.match(/\d+/)[0], 10); // Extrae el número de 'tp-2'
-        return numA - numB; // Ordena numéricamente
-      });
+        // Crear los links para las carpetas ordenadas
+        for (const item of carpetas) {
+            const li = document.createElement('li');
+            // Link a GitHub Pages donde se cargue y ejecute el index.html
+            const urlIndex = `https://${owner}.github.io/${repo}/${item.path}/index.html`;
+            li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
+            ulElement.appendChild(li);
+        }
+        }
 
-      // Crear los links para las carpetas ordenadas
-      for (const item of carpetas) {
-        const li = document.createElement('li');
-        // Link a GitHub Pages donde se cargue y ejecute el index.html
-        const urlIndex = `https://${owner}.github.io/${repo}/${item.path}/index.html`;
-        li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
-        ulElement.appendChild(li);
-      }
-    }
-
-    // Inicializamos la lista en la página
-    const repoContent = document.getElementById('repo-content');
-    crearLista('', repoContent);
-  </script>
+        // Inicializamos la lista en la página
+        const repoContent = document.getElementById('repo-content');
+        crearLista('', repoContent);
+    </script>
 </body>
 </html>
