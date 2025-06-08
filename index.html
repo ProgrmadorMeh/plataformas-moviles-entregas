@@ -1,13 +1,60 @@
 <!DOCTYPE html>
-<html>
-   <head>
-      <title>Hola Mundo!</title>
-   </head>
-   <body>
-     <h1>Trabajos Prácticos</h1>
-     <p>Listado de trabajos prácticos para la materia Plataformas Móviles</p>
-     <ul>
-       <li><a href="tp-1/">Primer Trabajo</a></li>
-     </ul>
-   </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Listado Recursivo Archivos GitHub</title>
+  <style>
+    ul { list-style-type: none; }
+    .folder { font-weight: bold; cursor: pointer; }
+    .nested { margin-left: 20px; display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body>
+  <h1>Archivos y Carpetas del Repo GitHub</h1>
+  <ul id="repo-content"></ul>
+
+  <script>
+    const owner = 'ProgrmadorMeh'; // Cambia por el dueño
+    const repo = 'plataformas-moviles-entregas'; // Cambia por el repo
+
+    async function listarContenido(path = '') {
+      const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.error('Error al obtener contenido:', response.status);
+        return [];
+      }
+      const data = await response.json();
+      return data;
+    }
+
+    async function crearLista(path = '', ulElement) {
+      const items = await listarContenido(path);
+      for (const item of items) {
+        const li = document.createElement('li');
+
+        if (item.type === 'dir') {
+          li.innerHTML = `<span class="folder">${item.name}</span>`;
+          const nestedUl = document.createElement('ul');
+          nestedUl.classList.add('nested');
+          li.appendChild(nestedUl);
+
+          li.querySelector('.folder').addEventListener('click', () => {
+            nestedUl.classList.toggle('active');
+          });
+
+          await crearLista(item.path, nestedUl);
+        } else if (item.type === 'file') {
+          li.innerHTML = `<a href="${item.download_url}" target="_blank">${item.name}</a>`;
+        }
+        ulElement.appendChild(li);
+      }
+    }
+
+    // Inicializamos la lista
+    const repoContent = document.getElementById('repo-content');
+    crearLista('', repoContent);
+  </script>
+</body>
 </html>
