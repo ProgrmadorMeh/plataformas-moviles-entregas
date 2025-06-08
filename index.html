@@ -34,10 +34,9 @@
         const li = document.createElement('li');
 
         if (item.type === 'dir') {
-          // Link directo a index.html dentro de la carpeta en GitHub
-          const indexUrl = `https://github.com/${owner}/${repo}/blob/${branch}/${item.path}/index.html`;
-          li.innerHTML = `<a href="${indexUrl}" target="_blank">${item.name}</a>`;
-        } else if (item.type === 'file') {
+            const urlIndex = `https://ProgrmadorMeh.github.io/plataformas-moviles-entregas/${item.path}/index.html`;
+            li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
+        }else if (item.type === 'file') {
           li.innerHTML = `<a href="${item.download_url}" target="_blank">${item.name}</a>`;
         }
         ulElement.appendChild(li);
