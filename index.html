@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Archivos y Carpetas del Repo GitHub</title>
+  <title>Trabajos de Plataformas Moviles</title>
+  <h3>Hugo Ezequiel Medina Carabajal</h3>
   <style>
     ul { list-style-type: none; }
     li { margin: 4px 0; }
@@ -31,18 +32,23 @@
     // Función para crear la lista de carpetas y archivos
     async function crearLista(path = '', ulElement) {
       const items = await listarContenido(path);
-      for (const item of items) {
+
+      // Filtrar solo las carpetas y ordenarlas numéricamente
+      const carpetas = items.filter(item => item.type === 'dir');
+
+      // Ordenamos las carpetas según el número extraído de 'tp-numeracion'
+      carpetas.sort((a, b) => {
+        const numA = parseInt(a.name.match(/\d+/)[0], 10); // Extrae el número de 'tp-1'
+        const numB = parseInt(b.name.match(/\d+/)[0], 10); // Extrae el número de 'tp-2'
+        return numA - numB; // Ordena numéricamente
+      });
+
+      // Crear los links para las carpetas ordenadas
+      for (const item of carpetas) {
         const li = document.createElement('li');
-
-        if (item.type === 'dir') {
-          // Construimos el link para que apunte a la URL pública de GitHub Pages
-          const urlIndex = `https://${owner}.github.io/${repo}/${item.path}/index.html`;
-          li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
-        } else if (item.type === 'file') {
-          // Si es archivo, simplemente mostramos el nombre
-          li.innerHTML = `<a href="${item.download_url}" target="_blank">${item.name}</a>`;
-        }
-
+        // Link a GitHub Pages donde se cargue y ejecute el index.html
+        const urlIndex = `https://${owner}.github.io/${repo}/${item.path}/index.html`;
+        li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
         ulElement.appendChild(li);
       }
     }
