@@ -13,37 +13,41 @@
   <ul id="repo-content"></ul>
 
   <script>
-    const owner = 'ProgrmadorMeh'; // Cambia por el dueño
-    const repo = 'plataformas-moviles-entregas'; // Cambia por el repo
-    const branch = 'main'; // Cambia si usás otra rama
+    const owner = 'ProgrmadorMeh'; // tu usuario GitHub
+    const repo = 'plataformas-moviles-entregas'; // nombre del repo donde está el código
+    const branch = 'main'; // o la rama que uses (por defecto es main)
 
+    // Función para listar los archivos y carpetas de un repo
     async function listarContenido(path = '') {
       const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
       const response = await fetch(url);
       if (!response.ok) {
-        console.error('Error al obtener contenido:', response.status);
+        console.error('Error:', response.status);
         return [];
       }
-      const data = await response.json();
-      return data;
+      return await response.json();
     }
 
+    // Función para crear la lista de carpetas y archivos
     async function crearLista(path = '', ulElement) {
       const items = await listarContenido(path);
       for (const item of items) {
         const li = document.createElement('li');
 
         if (item.type === 'dir') {
-            const urlIndex = `https://ProgrmadorMeh.github.io/plataformas-moviles-entregas/${item.path}/index.html`;
-            li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
-        }else if (item.type === 'file') {
+          // Construimos el link para que apunte a la URL pública de GitHub Pages
+          const urlIndex = `https://${owner}.github.io/${repo}/${item.path}/index.html`;
+          li.innerHTML = `<a href="${urlIndex}" target="_blank">${item.name}</a>`;
+        } else if (item.type === 'file') {
+          // Si es archivo, simplemente mostramos el nombre
           li.innerHTML = `<a href="${item.download_url}" target="_blank">${item.name}</a>`;
         }
+
         ulElement.appendChild(li);
       }
     }
 
-    // Inicializamos la lista
+    // Inicializamos la lista en la página
     const repoContent = document.getElementById('repo-content');
     crearLista('', repoContent);
   </script>
