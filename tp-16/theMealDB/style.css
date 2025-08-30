@@ -1,0 +1,125 @@
+html{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: rgb(211, 211, 211);
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #7a7a7a;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#lista {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+    list-style: none;
+    padding: 0 30px;
+}
+
+
+#lista > li {
+    background-color: #7a7a7a;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#lista .nombre{
+    text-align: center;
+    margin: 10px 0;
+}
+
+#lista button{
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    background-color: rgb(165, 165, 165);
+}
+
+#lista > li:hover {
+  transform: scale(1.03);
+}
+
+#lista .imagen{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: rgb(211, 211, 211);
+    border-radius: 5px;
+}
+#lista .imagen img{
+    width: 90%;
+    max-width: 600px;
+    margin: 10px 0;
+}
+
+#lista .verMas{
+    display: none;
+    padding: 10px;
+    background-color: rgb(165, 165, 165);
+    border-top: rgb(211, 211, 211) 2px solid;
+}
+#lista .verMas img{
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#lista .verMas p{
+    margin: 5px 0;
+}
+#lista .verMas ul{
+    margin: 0;
+    padding: 0;
+}
+#lista .verMas li{
+    list-style: none;
+    background-color: rgb(211, 211, 211);
+    margin: 5px 0;
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+#lista .verMas.activo {
+    display: block;
+}
+
+.btn-pais {
+    border: none;
+    border-radius: 8px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #3f3f3f;
+    color: white;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-pais:hover {
+  transform: scale(1.03);
+}
+
+.spinner {
+    background-image: url('spriner.png');
+    margin: 20px auto;
+
+    height: 100px;
+    animation: girar 1s linear infinite;
+}
+
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

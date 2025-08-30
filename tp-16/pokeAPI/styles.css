@@ -1,0 +1,112 @@
+html{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: rgb(116, 74, 71);
+    margin: 0;
+    padding: 0;
+}
+
+#lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    align-items: start;
+    list-style: none;
+}
+
+#lista > li {
+    background-color: #643b3b;
+    overflow: hidden;
+    padding: 10px 0 0 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#lista .nombre{
+    text-align: center;
+    margin: 0;
+}
+
+#lista button{
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    background-color: rgb(129, 85, 81);
+}
+
+#lista > li:hover {
+  transform: scale(1.03);
+}
+
+#lista .imagen{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: rgb(116, 74, 71);
+    border-radius: 5px;
+}
+
+#lista .verMas{
+    display: none;
+    padding: 10px;
+    background-color: rgb(129, 85, 81);
+    border-top: rgb(116, 74, 71) 3px solid;
+}
+#lista .verMas img{
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#lista .verMas p{
+    margin: 5px 0;
+}
+#lista .verMas ul{
+    margin: 0;
+    padding: 0;
+}
+#lista .verMas li{
+    list-style: none;
+    background-color: rgb(116, 74, 71);
+    margin: 5px 0;
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+#lista .verMas.activo {
+    display: block;
+}
+
+#cargarMas {
+    display: none;
+    border: none;
+    border-radius: 8px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #643b3b;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#cargarMas:hover {
+  transform: scale(1.03);
+}
+
+.spinner {
+    background-image: url('spriner.png');
+    margin: 20px auto;
+    width: 100px;
+    height: 100px;
+    animation: girar 1s linear infinite;
+}
+
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
